@@ -2,9 +2,12 @@ package takkino.java.patientsapp.web;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import takkino.java.patientsapp.entities.Patient;
 import takkino.java.patientsapp.repositories.PatientRepository;
 
@@ -15,11 +18,28 @@ public class PatientController {
     @Autowired
     private PatientRepository patientRepository;
 
-    @GetMapping("/index")
+/*    @GetMapping("/index")
     public String index(Model model) {
         List<Patient> patients = patientRepository.findAll();
         model.addAttribute("patients", patients);
         return "patients";
+    }*/
+
+    @GetMapping("/deletePatient")
+    public String deletePatient(@RequestParam(name = "id") Long id){
+        patientRepository.deleteById(id);
+        return "redirect:/index";
     }
 
+    @GetMapping("/index")
+    public String index(Model model,
+                        @RequestParam(name = "page", defaultValue ="0") int page,
+                        @RequestParam(name = "size", defaultValue ="5") int size
+        ) {
+        Page<Patient> pagePatients = patientRepository.findAll(PageRequest.of(page,size));
+        model.addAttribute("listPatients", pagePatients.getContent());
+        model.addAttribute("pages", new int[pagePatients.getTotalPages()]);
+        model.addAttribute("currentPage", page);
+        return "patients";
+    }
 }
