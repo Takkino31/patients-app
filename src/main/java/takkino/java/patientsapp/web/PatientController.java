@@ -1,7 +1,5 @@
 package takkino.java.patientsapp.web;
 
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -15,8 +13,11 @@ import java.util.List;
 
 @Controller
 public class PatientController {
-    @Autowired
-    private PatientRepository patientRepository;
+    private final PatientRepository patientRepository;
+
+    public PatientController(PatientRepository patientRepository) {
+        this.patientRepository = patientRepository;
+    }
 
 /*    @GetMapping("/index")
     public String index(Model model) {
@@ -26,20 +27,22 @@ public class PatientController {
     }*/
 
     @GetMapping("/deletePatient")
-    public String deletePatient(@RequestParam(name = "id") Long id){
+    public String deletePatient(@RequestParam(name = "id") Long id,int page ,String keyword){
         patientRepository.deleteById(id);
-        return "redirect:/index";
+        return "redirect:/index?page=&"+page+"&keyword="+keyword;
     }
 
     @GetMapping("/index")
     public String index(Model model,
                         @RequestParam(name = "page", defaultValue ="0") int page,
-                        @RequestParam(name = "size", defaultValue ="5") int size
+                        @RequestParam(name = "size", defaultValue ="5") int size,
+                        @RequestParam(name = "keyword", defaultValue ="") String keyword
         ) {
-        Page<Patient> pagePatients = patientRepository.findAll(PageRequest.of(page,size));
+        Page<Patient> pagePatients = patientRepository.findByFirstNameContainsIgnoreCaseOrLastNameContainingIgnoreCase(keyword,keyword,PageRequest.of(page,size));
         model.addAttribute("listPatients", pagePatients.getContent());
         model.addAttribute("pages", new int[pagePatients.getTotalPages()]);
         model.addAttribute("currentPage", page);
+        model.addAttribute("keyword", keyword);
         return "patients";
     }
 }
