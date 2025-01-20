@@ -1,7 +1,14 @@
 package takkino.java.patientsapp;
 
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import takkino.java.patientsapp.entities.Patient;
+import takkino.java.patientsapp.repositories.PatientRepository;
+
+import java.util.Date;
+import java.util.List;
 
 @SpringBootApplication
 public class PatientsAppApplication {
@@ -10,4 +17,34 @@ public class PatientsAppApplication {
         SpringApplication.run(PatientsAppApplication.class, args);
     }
 
+    @Bean
+    public CommandLineRunner commandLineRunner(PatientRepository patientRepository) {
+        return args -> {
+            System.out.println("patientRepository.findAll()");
+            Patient patient1 = new Patient();
+            patient1.setFirstName("Jan");
+            patient1.setLastName("Doe");
+            patient1.setDateOfBirth(new Date());
+            patient1.setScore(10);
+            patient1.setSick(true);
+            patientRepository.save(patient1);
+            Patient patient2 = new Patient(null,"Abraham","Lo",new Date(),false,654);
+            patientRepository.save(patient2);
+            Patient patient3 = Patient.builder()
+                    .firstName("Takkino")
+                    .lastName("War")
+                    .score(42)
+                    .build()
+                    ;
+            patientRepository.save(patient3);
+//            System.out.println(patient1.getFirstName() + " " + patient1.getLastName() + " " + patient1.getDateOfBirth() + " " + patient1.getScore());
+//            System.out.println(patient2.getFirstName() + " " + patient2.getLastName() + " " + patient2.getDateOfBirth() + " " + patient2.getScore());
+//            System.out.println(patient3.getFirstName() + " " + patient3.getLastName() + " " + patient3.getDateOfBirth() + " " + patient3.getScore());
+
+            final List<Patient> patients = patientRepository.findAll();
+            patients.forEach(patient ->
+                    System.out.println(patient.getFirstName() + " " + patient.getLastName() + " " + patient.getDateOfBirth() + " " + patient.getScore())
+            );
+        };
+    }
 }
