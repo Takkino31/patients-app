@@ -1,5 +1,7 @@
 package takkino.java.patientsapp.web;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,16 +18,30 @@ public class MedecinController {
     public MedecinController(MedecinRepository medecinRepository) {
         this.medecinRepository = medecinRepository;
     }
-    @GetMapping("/medecins")
-    public String medecin(Model model) {
-        Collection <Medecin> medecins =  medecinRepository.findAll();
-        model.addAttribute("medecins", medecins);
-        return "medecins";
-    }
 
     @GetMapping("/deleteMedecin")
-    public String deleteMedecin(@RequestParam (name="id")Long id) {
+    public String deleteMedecin(
+            @RequestParam (name="id")Long id
+    ) {
         medecinRepository.deleteById(id);
         return "redirect:/medecins";
     }
+
+    @GetMapping("/medecins")
+    public String medecin(
+                Model model,
+                @RequestParam(name = "page", defaultValue ="0") int page
+            ) {
+//        Collection < Medecin> medecins =  medecinRepository.findAll();
+//        model.addAttribute("medecins", medecins);
+
+        Page<Medecin> pageMedecins = medecinRepository.findAll(PageRequest.of(page, 5));
+        model.addAttribute("medecins", pageMedecins.getContent());
+        model.addAttribute("page", pageMedecins.getTotalPages());
+        System.out.println("page Medecins : " + page);
+        return "medecins";
+    }
+
+
+
 }

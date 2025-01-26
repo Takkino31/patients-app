@@ -22,23 +22,23 @@ public class PatientsAppApplication {
     @Bean
     public CommandLineRunner commandLineRunner(PatientRepository patientRepository, MedecinRepository MedecinRepository, MedecinRepository medecinRepository) {
         return args -> {
-            System.out.println("patientRepository.findAll()");
+//            System.out.println("patientRepository.findAll()");
             Patient patient1 = new Patient();
             patient1.setFirstName("Jan");
             patient1.setLastName("Doe");
             patient1.setDateOfBirth(new Date());
             patient1.setScore(10);
             patient1.setSick(true);
-            patientRepository.save(patient1);
+//            patientRepository.save(patient1);
             Patient patient2 = new Patient(null,"Abraham","Lo",new Date(),false,654);
-            patientRepository.save(patient2);
+//            patientRepository.save(patient2);
             Patient patient3 = Patient.builder()
                     .firstName("Takkino")
                     .lastName("War")
                     .score(42)
                     .build()
                     ;
-            patientRepository.save(patient3);
+//          patientRepository.save(patient3);
 
             Medecin medecin1 = Medecin.builder()
                     .firstName("Dona")
