@@ -32,7 +32,9 @@
                             <td th:text="${medecin.dateOfBirth}"></td>
                             <td th:text="${medecin.specialite}"></td>
                             <td >
-                                <a class="btn btn-outline-danger">Supprimer</a>
+                                <a onclick="return confirm('You sure ?')" class="btn btn-outline-danger"
+                                    th:href ="@{/deleteMedecin(id=${medecin.id})}">
+                                Delete</a>
                             </td>
                         </tr>
                     </tbody>
