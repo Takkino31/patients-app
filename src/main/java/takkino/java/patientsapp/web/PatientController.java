@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import takkino.java.patientsapp.entities.Patient;
 import takkino.java.patientsapp.repositories.PatientRepository;
 
-import java.util.List;
-
 @Controller
 public class PatientController {
     private final PatientRepository patientRepository;

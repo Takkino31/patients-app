@@ -4,7 +4,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import takkino.java.patientsapp.entities.Medecin;
 import takkino.java.patientsapp.entities.Patient;
+import takkino.java.patientsapp.repositories.MedecinRepository;
 import takkino.java.patientsapp.repositories.PatientRepository;
 
 import java.util.Date;
@@ -18,7 +20,7 @@ public class PatientsAppApplication {
     }
 
     @Bean
-    public CommandLineRunner commandLineRunner(PatientRepository patientRepository) {
+    public CommandLineRunner commandLineRunner(PatientRepository patientRepository, MedecinRepository MedecinRepository, MedecinRepository medecinRepository) {
         return args -> {
             System.out.println("patientRepository.findAll()");
             Patient patient1 = new Patient();
@@ -37,14 +39,30 @@ public class PatientsAppApplication {
                     .build()
                     ;
             patientRepository.save(patient3);
+
+            Medecin medecin1 = Medecin.builder()
+                    .firstName("Dona")
+                    .lastName("Paulsen")
+                    .dateOfBirth(new Date())
+                    .specialite("No people")
+                    .build();
+            Medecin medecin2 = new Medecin(null,"Saint", "Franklin", new Date(), "Pediatric");
+            Medecin medecin3 = new Medecin(null,"Deguene", "Fall", new Date(), "Big Heart");
+            Medecin medecin4 = new Medecin(null,"Gaye", "abdou", new Date(), "Real");
+            Medecin medecin5 = new Medecin(null,"Diarra", "Fall", new Date(), "Lover");
+            medecinRepository.save(medecin1);
+            medecinRepository.save(medecin2);
+            medecinRepository.save(medecin3);
+            medecinRepository.save(medecin4);
+            medecinRepository.save(medecin5);
 //            System.out.println(patient1.getFirstName() + " " + patient1.getLastName() + " " + patient1.getDateOfBirth() + " " + patient1.getScore());
 //            System.out.println(patient2.getFirstName() + " " + patient2.getLastName() + " " + patient2.getDateOfBirth() + " " + patient2.getScore());
 //            System.out.println(patient3.getFirstName() + " " + patient3.getLastName() + " " + patient3.getDateOfBirth() + " " + patient3.getScore());
 
-            final List<Patient> patients = patientRepository.findAll();
-            patients.forEach(patient ->
-                    System.out.println(patient.getFirstName() + " " + patient.getLastName() + " " + patient.getDateOfBirth() + " " + patient.getScore())
-            );
+//            final List<Patient> patients = patientRepository.findAll();
+//            patients.forEach(patient ->
+//                    System.out.println(patient.getFirstName() + " " + patient.getLastName() + " " + patient.getDateOfBirth() + " " + patient.getScore())
+//            );
         };
     }
 }
