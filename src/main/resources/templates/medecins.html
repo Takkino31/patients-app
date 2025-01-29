@@ -49,7 +49,7 @@
                     <li th:each="page,status:${pages}">
                         <a
                             th:class="${status.index==currentPage?'btn btn-primary m-1':'btn btn-outline-primary m-1'}"
-                            th:href="@{/medecins(page=${status.index},keyword=${search})}"
+                            th:href="@{/medecins(page=${status.index},search=${search})}"
                             th:text="${status.index}"
                         >
                         </a>

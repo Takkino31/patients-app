@@ -36,6 +36,7 @@ public class PatientController {
                         @RequestParam(name = "size", defaultValue ="5") int size,
                         @RequestParam(name = "keyword", defaultValue ="") String keyword
         ) {
+
         Page<Patient> pagePatients = patientRepository.findByFirstNameContainsIgnoreCaseOrLastNameContainingIgnoreCase(keyword,keyword,PageRequest.of(page,size));
         model.addAttribute("listPatients", pagePatients.getContent());
         model.addAttribute("pages", new int[pagePatients.getTotalPages()]);

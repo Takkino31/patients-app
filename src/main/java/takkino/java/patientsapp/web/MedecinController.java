@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import takkino.java.patientsapp.entities.Medecin;
 import takkino.java.patientsapp.repositories.MedecinRepository;
 
-import java.util.Collection;
 
 @Controller
 public class MedecinController {
@@ -21,10 +20,10 @@ public class MedecinController {
 
     @GetMapping("/deleteMedecin")
     public String deleteMedecin(
-            @RequestParam (name="id")Long id
+            @RequestParam (name="id")Long id, int page , String search
     ) {
         medecinRepository.deleteById(id);
-        return "redirect:/medecins";
+        return "redirect:/medecins?page=&"+page+"&search="+search;
     }
 
     @GetMapping("/medecins")
@@ -36,7 +35,7 @@ public class MedecinController {
             ) {
 
 
-        Page<Medecin> pageMedecins = medecinRepository.findAll(PageRequest.of(page, size));
+        Page<Medecin> pageMedecins = medecinRepository.findByFirstNameContainsIgnoreCaseOrLastNameContainingIgnoreCase(search,search,PageRequest.of(page, size));
         model.addAttribute("medecins", pageMedecins.getContent());
         model.addAttribute("pages", new int[pageMedecins.getTotalPages()] );
         model.addAttribute("currentPage", page);
