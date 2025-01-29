@@ -23,7 +23,7 @@ public class MedecinController {
             @RequestParam (name="id")Long id, int page , String search
     ) {
         medecinRepository.deleteById(id);
-        return "redirect:/medecins?page=&"+page+"&search="+search;
+        return "redirect:/medecins?page="+page+"&search="+search;
     }
 
     @GetMapping("/medecins")
@@ -33,7 +33,6 @@ public class MedecinController {
                 @RequestParam(name = "size", defaultValue ="5") int size,
                 @RequestParam(name = "search", defaultValue ="") String search
             ) {
-
 
         Page<Medecin> pageMedecins = medecinRepository.findByFirstNameContainsIgnoreCaseOrLastNameContainingIgnoreCase(search,search,PageRequest.of(page, size));
         model.addAttribute("medecins", pageMedecins.getContent());

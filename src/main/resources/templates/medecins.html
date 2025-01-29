@@ -39,7 +39,7 @@
                             <td th:text="${medecin.specialite}"></td>
                             <td >
                                 <a onclick="return confirm('You sure ?')" class="btn btn-outline-danger"
-                                    th:href ="@{/deleteMedecin(id=${medecin.id})}">
+                                    th:href ="@{/deleteMedecin(id=${medecin.id},page=${currentPage},search=${search})}">
                                 Delete</a>
                             </td>
                         </tr>
