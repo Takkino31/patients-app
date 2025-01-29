@@ -17,6 +17,12 @@
                 <p>La liste des medecins</p>
             </div>
             <div class="card-body">
+                <form th:method="get" th:ation="@{/medecins}">
+                    <label>Search : </label>
+                    <input class="form-control" name="search" th:value="${search}" placeholder="Search Medecins">
+                    <button class="btn btn-outline-primary">Search</button>
+                </form>
+
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -40,10 +46,10 @@
                     </tbody>
                 </table>
                 <ul class="nav nav-pills">
-                    <li th:each="page,status:${medecins}">
+                    <li th:each="page,status:${pages}">
                         <a
-                            class="btn btn-outline-primary"
-                            th:href="@{/medecins(page=${status.index})}"
+                            th:class="${status.index==currentPage?'btn btn-primary m-1':'btn btn-outline-primary m-1'}"
+                            th:href="@{/medecins(page=${status.index},keyword=${search})}"
                             th:text="${status.index}"
                         >
                         </a>

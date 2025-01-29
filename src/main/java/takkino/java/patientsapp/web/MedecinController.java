@@ -30,15 +30,18 @@ public class MedecinController {
     @GetMapping("/medecins")
     public String medecin(
                 Model model,
-                @RequestParam(name = "page", defaultValue ="0") int page
+                @RequestParam(name = "page", defaultValue ="0") int page,
+                @RequestParam(name = "size", defaultValue ="5") int size,
+                @RequestParam(name = "search", defaultValue ="") String search
             ) {
-//        Collection < Medecin> medecins =  medecinRepository.findAll();
-//        model.addAttribute("medecins", medecins);
 
-        Page<Medecin> pageMedecins = medecinRepository.findAll(PageRequest.of(page, 5));
+
+        Page<Medecin> pageMedecins = medecinRepository.findAll(PageRequest.of(page, size));
         model.addAttribute("medecins", pageMedecins.getContent());
-        model.addAttribute("page", pageMedecins.getTotalPages());
-        System.out.println("page Medecins : " + page);
+        model.addAttribute("pages", new int[pageMedecins.getTotalPages()] );
+        model.addAttribute("currentPage", page);
+        model.addAttribute("search", search);
+
         return "medecins";
     }
 
