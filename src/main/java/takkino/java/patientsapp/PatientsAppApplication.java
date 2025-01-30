@@ -50,11 +50,11 @@ public class PatientsAppApplication {
             Medecin medecin3 = new Medecin(null,"Deguene", "Fall", new Date(), "Big Heart");
             Medecin medecin4 = new Medecin(null,"Gaye", "abdou", new Date(), "Real");
             Medecin medecin5 = new Medecin(null,"Diarra", "Fall", new Date(), "Lover");
-            medecinRepository.save(medecin1);
-            medecinRepository.save(medecin2);
-            medecinRepository.save(medecin3);
-            medecinRepository.save(medecin4);
-            medecinRepository.save(medecin5);
+//            medecinRepository.save(medecin1);
+//            medecinRepository.save(medecin2);
+//            medecinRepository.save(medecin3);
+//            medecinRepository.save(medecin4);
+//            medecinRepository.save(medecin5);
 //            System.out.println(patient1.getFirstName() + " " + patient1.getLastName() + " " + patient1.getDateOfBirth() + " " + patient1.getScore());
 //            System.out.println(patient2.getFirstName() + " " + patient2.getLastName() + " " + patient2.getDateOfBirth() + " " + patient2.getScore());
 //            System.out.println(patient3.getFirstName() + " " + patient3.getLastName() + " " + patient3.getDateOfBirth() + " " + patient3.getScore());
