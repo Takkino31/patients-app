@@ -5,6 +5,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import takkino.java.patientsapp.entities.Patient;
 import takkino.java.patientsapp.repositories.PatientRepository;
@@ -43,5 +45,17 @@ public class PatientController {
         model.addAttribute("currentPage", page);
         model.addAttribute("keyword", keyword);
         return "patients";
+    }
+
+    @GetMapping("/formPatients")
+    public String formPatients(Model model){
+        model.addAttribute("patient", new Patient());
+        return "formPatients";
+    }
+
+    @PostMapping("/save")
+    public String savePatient(@ModelAttribute("patient") Patient patient){
+        patientRepository.save(patient);
+        return "redirect:/formPatients";
     }
 }

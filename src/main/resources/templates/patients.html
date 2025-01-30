@@ -18,10 +18,12 @@
                 <p>La liste de mes patients</p>
             </div>
             <div class="card-body">
-                <form th:method="get" th:action="@{/index}">
-                    <label>Search :</label>
-                    <input type="text" name="keyword" th:value="${keyword}"/>
-                    <button  class="btn btn-outline-info">Search</button>
+                <form th:method="get" th:action="@{/index}" class="d-flex">
+<!--                    <label>Search :</label>-->
+                    <label>
+                        <input class="form-control me-2 "  type="text" name="keyword" th:value="${keyword}"/>
+                    </label>
+                    <button  class="btn btn-outline-primary">Search</button>
                 </form>
                 <table class="table table-striped">
                     <thead>
@@ -56,7 +58,8 @@
                         <a
                                 th:class="${status.index==currentPage?'btn btn-primary m-1':'btn btn-outline-primary m-1'}"
                                 th:href="@{/index(page=${status.index},keyword=${keyword})}"
-                                th:text="${status.index}"></a>
+                                th:text="${status.index}">
+                        </a>
                     </li>
                 </ul>
             </div>
