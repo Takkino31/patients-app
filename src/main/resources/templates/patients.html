@@ -34,7 +34,7 @@
                         <th>Date</th>
                         <th>Malade</th>
                         <th>Score</th>
-                        <th>Supprimer</th>
+                        <th colspan="2" class="text-center">Actions</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -45,6 +45,11 @@
                         <td th:text="${patient.dateOfBirth}"></td>
                         <td th:text="${patient.sick}"></td>
                         <td th:text="${patient.score}"></td>
+                        <td>
+                            <a class="btn btn-secondary"
+                               th:href="@{/editPatient(id=${patient.id},page=${currentPage},search=${keyword})}"
+                            >Modifier</a>
+                        </td>
                         <td>
                             <a onclick="return confirm('You sure ?')" class="btn btn-danger"
                                th:href="@{/deletePatient(id=${patient.id},page=${currentPage},keyword=${keyword})}"

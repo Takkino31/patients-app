@@ -56,9 +56,31 @@ public class PatientController {
     }
 
     @PostMapping("/save")
-    public String savePatient(@Valid @ModelAttribute("patient") Patient patient, BindingResult bindingResult){
+    public String savePatient(@Valid @ModelAttribute("patient") Patient patient, BindingResult bindingResult,
+                              @RequestParam(defaultValue = "0") int page,
+                              @RequestParam(defaultValue = "") String search
+    ){
         if (bindingResult.hasErrors()) return "formPatients";
         patientRepository.save(patient);
-        return "redirect:/formPatients";
+        return "redirect:/index?page="+page+"&search="+search;
+    }
+
+    @GetMapping("/editPatient")
+    public String editPatient(
+            Model model,
+            @RequestParam(name = "id") Long id,
+            @RequestParam(name = "page", defaultValue ="0") int page,
+            @RequestParam(name = "search", defaultValue ="") String search
+
+            ){
+        Patient patientToEdit = patientRepository.findById(id).orElse(null);
+        if (patientToEdit == null ) throw new RuntimeException("Patient not found");
+        model.addAttribute("patient", patientToEdit);
+        model.addAttribute("page", page);
+        model.addAttribute("keyword", search);
+        model.addAttribute("search", search);
+        System.out.println("PatientController  line 81");
+        System.out.println("Page = "+page+ " " +"keyword = "+search);
+        return "/editPatient";
     }
 }
